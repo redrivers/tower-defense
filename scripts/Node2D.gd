@@ -1,6 +1,7 @@
 extends Node2D
 
 const Beholder = preload("res://scenes/characters/beholder.tscn")
+const Goblin = preload("res://scenes/characters/goblin.tscn")
 
 const TIMEOUT = 1
 
@@ -16,20 +17,24 @@ onready var TextNode = get_node("Label")
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-    pass # Replace with function body.
-    
+	pass # Replace with function body.
+	
 func _process(delta):
-    if timeout < TIMEOUT:
-        timeout += delta
-        return
-    
-    TextNode.text = " --- Testing " + str(counter)
-    counter += 1
-    timeout = 0
-    
-    var beholder = Beholder.instance()
-    beholder.position = Vector2(500,350)
-    add_child(beholder)
+	if timeout < TIMEOUT:
+		timeout += delta
+		return
+	
+	TextNode.text = " --- Testing " + str(counter)
+	counter += 1
+	timeout = 0
+	
+	var beholder = Beholder.instance()
+	beholder.position = Vector2(500,350)
+	add_child(beholder)
+	
+	var goblin = Goblin.instance()
+	goblin.position = Vector2(500,500)
+	add_child(goblin)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

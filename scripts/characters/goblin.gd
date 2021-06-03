@@ -1,6 +1,6 @@
 extends KinematicBody2D
 
-export (int) var speed = 200
+export (int) var speed = 150
 
 var _target = Vector2(randi() % 1280, randi() % 720)
 var _timer = null
@@ -11,7 +11,7 @@ func _ready():
 	_timer = Timer.new()
 	add_child(_timer)
 	_timer.connect("timeout", self, "move_random")
-	_timer.set_wait_time(2)
+	_timer.set_wait_time(4)
 	_timer.set_one_shot(false)
 	_timer.start()
 		
