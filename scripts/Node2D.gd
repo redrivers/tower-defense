@@ -33,7 +33,7 @@ func _process(delta):
 	add_child(beholder)
 	
 	var goblin = Goblin.instance()
-	goblin.position = Vector2(500,500)
+	goblin.position = Vector2(1000, 400)
 	add_child(goblin)
 
 
