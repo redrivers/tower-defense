@@ -1,0 +1,76 @@
+[gd_scene load_steps=2 format=2]
+
+[sub_resource type="ExternalTexture" id=1]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="background" type="NinePatchRect" parent="."]
+margin_right = 420.0
+margin_bottom = 40.0
+texture = SubResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="score" type="HBoxContainer" parent="background"]
+margin_right = 416.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="beholders" type="HBoxContainer" parent="background/score"]
+margin_right = 194.0
+margin_bottom = 40.0
+
+[node name="label" type="Label" parent="background/score/beholders"]
+margin_top = 13.0
+margin_right = 150.0
+margin_bottom = 27.0
+rect_min_size = Vector2( 150, 0 )
+text = "Beholders"
+
+[node name="score" type="Label" parent="background/score/beholders"]
+margin_left = 154.0
+margin_top = 13.0
+margin_right = 194.0
+margin_bottom = 27.0
+rect_min_size = Vector2( 40, 0 )
+text = "0"
+align = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="background/score"]
+margin_left = 198.0
+margin_top = 13.0
+margin_right = 218.0
+margin_bottom = 27.0
+rect_min_size = Vector2( 20, 0 )
+text = "x"
+align = 1
+
+[node name="goblins" type="HBoxContainer" parent="background/score"]
+margin_left = 222.0
+margin_right = 416.0
+margin_bottom = 40.0
+
+[node name="score" type="Label" parent="background/score/goblins"]
+margin_top = 13.0
+margin_right = 40.0
+margin_bottom = 27.0
+rect_min_size = Vector2( 40, 0 )
+text = "0"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Beholders" type="Label" parent="background/score/goblins"]
+margin_left = 44.0
+margin_top = 13.0
+margin_right = 194.0
+margin_bottom = 27.0
+rect_min_size = Vector2( 150, 0 )
+text = "Goblins"
+align = 2

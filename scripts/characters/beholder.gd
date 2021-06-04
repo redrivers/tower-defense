@@ -1,5 +1,6 @@
 extends KinematicBody2D
 
+
 var attack = 30
 var attack_speed = 0.5
 var class_type = "beholder"
@@ -8,6 +9,7 @@ var speed = 250
 var _attack_target
 var _attack_timer = null
 var _is_attacking = false
+var _is_dead = false
 var _size
 var _target
 var _timer = null
@@ -112,6 +114,8 @@ func move_random():
 func death():
 	collision.disabled = true
 	$health.visible = false
+	var score = get_parent().get_node("scoreboard/background/score/goblins/score")
+	score.text = str(int(score.text) + 1)
 	
 	Animation.animation = "death"
 	_timer = Timer.new()
@@ -119,6 +123,7 @@ func death():
 	_timer.connect("timeout", self, "destroy")
 	_timer.set_wait_time(3)
 	_timer.start()
+	_is_dead = true
 
 
 func destroy():

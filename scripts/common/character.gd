@@ -10,6 +10,6 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-    if hp_bar.value <= 0:
+    if hp_bar.value <= 0 and !get_parent()._is_dead:
         # zero hp = death
         get_parent().death()

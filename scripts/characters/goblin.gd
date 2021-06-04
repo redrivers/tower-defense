@@ -8,6 +8,7 @@ var speed = 250
 var _attack_target
 var _attack_timer = null
 var _is_attacking = false
+var _is_dead = false
 var _size
 var _target
 var _timer = null
@@ -113,12 +114,16 @@ func death():
 	collision.disabled = true
 	$health.visible = false
 	
+	var score = get_parent().get_node("scoreboard/background/score/beholders/score")
+	score.text = str(int(score.text) + 1)
+	
 	Animation.animation = "death"
 	_timer = Timer.new()
 	add_child(_timer)
 	_timer.connect("timeout", self, "destroy")
 	_timer.set_wait_time(3)
 	_timer.start()
+	_is_dead = true
 
 
 func destroy():
