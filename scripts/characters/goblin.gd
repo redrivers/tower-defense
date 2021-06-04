@@ -1,21 +1,21 @@
 extends KinematicBody2D
 
-export (int) var speed = 250
-
-const ATTACK_POWER = 30
-const ATTACK_SPEED = 0.5
-
+var attack = 30
+var attack_speed = 0.5
 var class_type = "goblin"
+var speed = 250
 
 var _attack_target
 var _attack_timer = null
 var _is_attacking = false
+var _size
 var _target
 var _timer = null
 var _velocity = Vector2()
 
 onready var Animation: AnimatedSprite = get_node("AnimatedSprite")
-onready var health_bar = get_node("health")
+onready var collision = get_node("collision")
+onready var health_bar: ProgressBar = get_node("health")
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -30,12 +30,31 @@ func _ready():
 	
 	_attack_timer = Timer.new()
 	add_child(_attack_timer)
+	
+	var random_num = randf()
+	if random_num < 0.6:
+		_size = 1
+	elif random_num < 0.9:
+		_size = 0.5
+	elif random_num < 0.98:
+		_size = 2
+	else:
+		_size = 5
 		
+	set_scale(Vector2(_size, _size))
+	attack = int(attack * _size)
+	attack_speed = attack_speed * _size
+	speed = speed / _size
+	
+	health_bar.max_value = health_bar.max_value * (_size * _size)
+	health_bar.value = health_bar.max_value
+	
+	
 
 func _process(delta):
 	if _attack_target != null and !_is_attacking:
 		_attack_timer.connect("timeout", self, "attack")
-		_attack_timer.set_wait_time(ATTACK_SPEED)
+		_attack_timer.set_wait_time(attack_speed)
 		_attack_timer.set_one_shot(false)
 		_attack_timer.start()
 		_is_attacking = true
@@ -58,18 +77,22 @@ func _physics_process(delta):
 				_attack_target = collider
 	else:
 		Animation.animation = "default"
+		
+	Animation.flip_h = _velocity.x < 0
 
 
 func attack():
 	if health_bar.value <= 0:
 		return
-
-	Animation.animation = "attack" + str(randi() % 2 + 1)
 	
-	if !is_instance_valid(_attack_target) or !_attack_target.receive_damage(ATTACK_POWER):
+	if !is_instance_valid(_attack_target) or !_attack_target.receive_damage(randi() % attack):
 		_attack_timer.disconnect("timeout", self, "attack")
 		_is_attacking = false
 		_attack_target = null
+		return
+		
+	Animation.animation = "attack" + str(randi() % 2 + 1)
+	Animation.flip_h = _attack_target.position.x - position.x < 0
 	
 
 func receive_damage(amount):
@@ -87,6 +110,9 @@ func move_random():
 
 
 func death():
+	collision.disabled = true
+	$health.visible = false
+	
 	Animation.animation = "death"
 	_timer = Timer.new()
 	add_child(_timer)
